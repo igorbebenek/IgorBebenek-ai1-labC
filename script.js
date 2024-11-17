@@ -80,6 +80,12 @@
             if (err) return;
 
             const imageURL = canvas.toDataURL("image/png");
+
+            const rasterMapContainer = document.getElementById("raster-map-container");
+            rasterMapContainer.style.backgroundImage = `url(${imageURL})`;
+            rasterMapContainer.style.backgroundSize = "cover";
+            rasterMapContainer.style.backgroundPosition = "center";
+
             const puzzleContainer = document.getElementById("puzzle-container");
             puzzleContainer.innerHTML = "";
 
@@ -93,6 +99,8 @@
                     piece.className = "puzzle-piece";
                     piece.style.backgroundImage = `url(${imageURL})`;
                     piece.style.backgroundPosition = `-${x * pieceWidth}px -${y * pieceHeight}px`;
+                    piece.style.width = `${pieceWidth}px`;
+                    piece.style.height = `${pieceHeight}px`;
                     piece.setAttribute("data-original-index", y * 4 + x);
                     pieces.push(piece);
                 }
@@ -113,6 +121,8 @@
             initializeDragAndDrop();
         });
     });
+
+
 
     function initializeDragAndDrop() {
         const puzzlePieces = document.querySelectorAll(".puzzle-piece");
@@ -148,9 +158,9 @@
                     }
                 }
             });
-
         });
     }
+
 
     function checkPuzzleCompletion() {
         const gridCells = document.querySelectorAll(".grid-cell");
